@@ -1,0 +1,30 @@
+{% extends "index/base.html" %}
+
+{% block title %}Turno{% endblock %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header ">
+            <h5 class="card-title">Turno</h5>
+        </div>
+        <div class="card-body">
+
+            <form method="post" class="form">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                <button type="submit" class="btn btn-success">
+                    Aceptar
+                </button>
+                <a href="{% url 'appointments:list' %}" class="btn btn-danger">Cancelar</a>
+                {% endbuttons %}
+            </form>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

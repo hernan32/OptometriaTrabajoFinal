@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel</title>
+</head>
+<body>
+<h2>Área para miembros</h2>
+
+<p>
+    Bienvenido <b>{{request.user.username}}</b>,
+    esta página es exclusiva para usuarios registrados.
+</p>
+{% if user.groups.all.0.name == "Medico" %}
+Sos Medico
+{% elif 1 == 1%}
+Sos caca
+{% else %}
+ASD
+{% endif %}
+<hr/>
+<a href="/logout">Cerrar sesión</a>
+
+</body>
+</html>

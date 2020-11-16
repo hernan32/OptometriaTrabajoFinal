@@ -1,0 +1,23 @@
+{% extends "index/base.html" %}
+{% load static %}
+{% block custom_imports %}
+<link rel="stylesheet" href="{% static '/css/signin.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="text-center">
+    <form class="form-signin" style="max-width:400px" method="POST">
+        <img class=" mb-4" src="{% static '/img/logo.png' %}" alt="" width="50%" height="50%">
+        <h1 class="h3 mb-3 font-weight-normal">Iniciar Sesion</h1>
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
+    </form>
+</div>
+{% endblock %}
+
+
+
+

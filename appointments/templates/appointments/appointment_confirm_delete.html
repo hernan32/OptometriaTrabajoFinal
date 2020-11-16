@@ -1,0 +1,21 @@
+{% extends "index/base.html" %}
+{% block title %}Borrar{% endblock %}
+{% block content %}
+<div class="container mt-4 text-center">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Borrar Turno - <strong>{{appointment.date}}</strong></h5>
+        </div>
+        <div class="card-body">
+            <form method="post">{% csrf_token %}
+                <div class="alert alert-warning" role="alert">
+                    ¿Estás seguro que deseas borrar el turno: <strong>"{{appointment.patient}}"</strong>?
+                </div>
+                <input type="submit" value="Aceptar" class="btn btn-danger"/>
+                <a href="{% url 'appointments:list' %}" class="btn btn-primary">Regresar</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

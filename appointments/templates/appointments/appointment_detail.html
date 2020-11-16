@@ -1,0 +1,29 @@
+{% extends "index/base.html" %}
+
+{% block title %}Turno{% endblock %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">{{appointment.patient}}</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Fecha</dt>
+                <dd class="col-sm-9">{{ appointment.date }}</dd>
+                <dt class="col-sm-3">Medico</dt>
+                <dd class="col-sm-9">{{ appointment.medic }}</dd>
+                <dt class="col-sm-3">Atendido</dt>
+                <dd class="col-sm-9">
+                    <td><input type="checkbox" name="published" disabled="false" {% if appointment.was_present %}
+                               checked {% endif %}/></td>
+                </dd>
+            </dl>
+
+            <a href="{% url 'appointments:list' %}" class="btn btn-primary">Regresar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
