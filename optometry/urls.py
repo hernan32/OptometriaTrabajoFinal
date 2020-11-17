@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('index.urls')),
     path('', include('login.urls')),
-    url(r'^turnos/', include(('appointments.urls', 'appointments'), namespace='appointments')),
+    url(r'^secretaria/', include(('appointments.urls', 'appointments'), namespace='appointments')),
+    url(r'^medico/', include(('appointments.urls', 'appointments'), namespace='test')),
 ]

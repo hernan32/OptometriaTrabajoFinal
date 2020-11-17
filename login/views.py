@@ -28,7 +28,9 @@ def login(request):
             if user is not None:
                 do_login(request, user)
                 if request.user.groups.filter(name='Secretaria').exists():
-                    return HttpResponseRedirect('/turnos')
+                    return HttpResponseRedirect('/secretaria/turnos/')
+                elif request.user.groups.filter(name="Medico").exists():
+                    return HttpResponseRedirect('/medico/mis_pacientes/')
                 return redirect('/panel')
 
     return render(request, "login.html", {'form': form})
