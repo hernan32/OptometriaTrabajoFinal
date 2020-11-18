@@ -1,4 +1,6 @@
-![image](/.github/polo_logo_2020.png)
+<p align="center">
+  <img src="/.github/polo_logo_2020.png" />
+</p>
 
 # OptometryFinalProyect
 
