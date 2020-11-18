@@ -1,10 +1,12 @@
+![image](/.github/polo_logo_2020.png)
+
 # OptometryFinalProyect
 
 The goal of this project is to accomplish the final [requirements](/.github/FINAL_PROJECT.md) from the course.
 
 ## Built With
 
-* [Python](https://www.python.org/)
+* [Python](https://www.python.org/) - Programming Language
 * [Django](https://www.djangoproject.com/) - Web Framework
 * [Bootstrap](https://getbootstrap.com/) - HTML/CSS/JS Framework
 * [Django Bootstrap](https://pypi.org/project/django-bootstrap4/) - Bootstrap 4 integration for Django.
