@@ -4,7 +4,7 @@
 
 # OptometryFinalProyect
 
-The goal of this project is to accomplish the final [requirements](/.github/FINAL_PROJECT.md) from the course.
+The goal of this project is to accomplish the final [requirements](/.github/FINAL_PROJECT.md) from the [course](/.github/COURSE.md).
 
 ## Built With
 
