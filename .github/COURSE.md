@@ -1,4 +1,9 @@
-Clases:
+<p align="center">
+  <img src="/.github/polo_logo_2020.png" />
+</p>
+
+# Curso de Programación Web con Python y JavaScript
+
 
 1. Aprender a diagramar las vistas que comprenderán la
 visualización del sitio web.
