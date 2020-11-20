@@ -1,0 +1,35 @@
+{% extends "index/base.html" %}
+{% block title %}Pedido{% endblock %}
+{% block navbar %} {% include "index/logout.html" %}{% endblock %}
+{% load bootstrap4 %}
+{% block content %}
+
+</script>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header ">
+            <h5 class="card-title">Pedido</h5>
+        </div>
+        <div class="card-body">
+
+            <form method="post" class="form">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class="form-group">
+                    <label>Total</label>
+                    <p>$ {{order.total_price}}</p>
+                </div>
+                {% buttons %}
+
+                <button type="submit" class="btn btn-success">
+                    Aceptar
+                </button>
+                <a href="{% url 'orders:list' %}" class="btn btn-danger">Cancelar</a>
+                {% endbuttons %}
+            </form>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

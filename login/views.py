@@ -31,6 +31,8 @@ def login(request):
                     return HttpResponseRedirect('/secretaria/turnos/')
                 elif request.user.groups.filter(name="Medico").exists():
                     return HttpResponseRedirect('/medico/mis_pacientes/')
+                elif request.user.groups.filter(name="Vendedor").exists():
+                    return HttpResponseRedirect('/vendedor/pedidos/')
                 return redirect('/panel')
 
     return render(request, "login.html", {'form': form})

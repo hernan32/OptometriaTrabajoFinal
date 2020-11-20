@@ -12,7 +12,7 @@ class PatientUpdate(UpdateView):
 
     def get_form(self, form_class=None):
         form = super(PatientUpdate, self).get_form()
-        form.fields['document_id'].widget.attrs['readonly'] = 'readonly'
-        form.fields['first_name'].widget.attrs['readonly'] = 'readonly'
-        form.fields['last_name'].widget.attrs['readonly'] = 'readonly'
+        form.fields['document_id'].disabled = True
+        form.fields['first_name'].disabled = True
+        form.fields['last_name'].disabled = True
         return form

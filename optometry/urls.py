@@ -22,5 +22,6 @@ urlpatterns = [
     path('', include('index.urls')),
     path('', include('login.urls')),
     url(r'^secretaria/', include(('appointments.urls', 'appointments'), namespace='appointments')),
-    url(r'^medico/', include(('appointments.urls', 'appointments'), namespace='test')),
+    url(r'^medico/', include(('appointments.urls', 'appointments'), namespace='my_patients')),
+    url(r'^vendedor/', include(('orders.urls', 'orders'), namespace='orders'))
 ]
