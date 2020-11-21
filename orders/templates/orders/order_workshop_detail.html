@@ -1,0 +1,19 @@
+{% extends "index/base.html" %}
+
+{% block title %}Productos{% endblock %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">{{order.patient}}</h5>
+        </div>
+        <div class="card-body col-4">
+                <ul class="list-group">{% for product in order.products.all %}<li class="list-group-item"> {{ product }}</li>{% endfor %}</ul>
+            <br>
+            <a href="{% url 'orders:workshop_list' %}" class="btn btn-primary">Regresar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

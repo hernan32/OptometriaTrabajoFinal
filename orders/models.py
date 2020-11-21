@@ -62,6 +62,7 @@ class Order(models.Model):
         ('PED', 'Pedido'),
         ('TAL', 'Taller'),
         ('PEN', 'Pendiente'),
+        ('FIN', 'Finalizado'),
     )
     status = models.CharField(max_length=3,
                               choices=STATUS,

@@ -33,11 +33,13 @@ def login(request):
                     return HttpResponseRedirect('/medico/mis_pacientes/')
                 elif request.user.groups.filter(name="Vendedor").exists():
                     return HttpResponseRedirect('/vendedor/pedidos/')
-                return redirect('/panel')
+                elif request.user.groups.filter(name="Taller").exists():
+                    return HttpResponseRedirect('/tallerista/pedidos/')
+                return redirect('/login')
 
     return render(request, "login.html", {'form': form})
 
 
 def logout(request):
     do_logout(request)
-    return redirect('/')
+    return redirect('/login')

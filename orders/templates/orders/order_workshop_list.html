@@ -1,0 +1,39 @@
+{% extends "index/base.html" %}
+{% block title %}Pedidos{% endblock %}
+{% block navbar %} {% include "index/logout.html" %}{% endblock %}
+{% block content %}
+
+<div class="container mt-4 text-center">
+        <h1>Pedidos en Taller</h1>
+
+    <table class="table mt-4">
+        <tr>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Paciente</th>
+                    <th scope="col">Vendedor</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in object_list %}
+                <tr>
+                    <td>{{order.patient}}</td>
+                    <td>{{order.seller}}</td>
+                    <td>{{order.date}}</td>
+                    <td>{{order.get_status_display}}</td>
+                    <td>
+                        <a href="{% url 'orders:workshop_detail' order.id %}" class="btn btn-primary">Productos</a> | <a href="{% url 'orders:workshop_edit' order.id %}" class="btn btn-info">Actualizar</a>
+                    </td>
+
+
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </tr>
+    </table>
+</div>
+{% endblock %}
