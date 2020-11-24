@@ -3,37 +3,38 @@
 {% block navbar %} {% include "index/logout.html" %}{% endblock %}
 {% block content %}
 <div class="container mt-4 text-center">
-        <h1>Turnos</h1>
+    <h1>Turnos</h1>
 
     <a href="{% url 'appointments:new'%}" class="btn btn-primary">Agregar - Nuevo Turno</a>
     <table class="table mt-4">
         <tr>
             <thead class="thead-light">
-                <tr>
-                    <th scope="col">Paciente</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Medico</th>
-                    <th scope="col">¿Asistio?</th>
-                    <th scope="col">Acciones</th>
-                </tr>
+            <tr>
+                <th scope="col">Paciente</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Medico</th>
+                <th scope="col">¿Asistio?</th>
+                <th scope="col">Acciones</th>
+            </tr>
             </thead>
             <tbody>
-                {% for appointment in object_list %}
-                <tr>
-                    <td>{{appointment.patient}}</td>
-                    <td>{{appointment.date}}</td>
-                    <td>{{appointment.medic}}</td>
-                    <td><input type="checkbox" name="published" disabled="false" {% if appointment.was_present %}checked{% endif %} /></td>
-
-                    <td>
-                        <a href="{% url 'appointments:detail' appointment.id %}" class="btn btn-primary">Ver</a> | <a href="{% url 'appointments:edit' appointment.id %}" class="btn btn-info">Editar</a> |
+            {% for appointment in object_list %}
+            <tr>
+                <td>{{appointment.patient}}</td>
+                <td>{{appointment.date}}</td>
+                <td>{{appointment.medic}}</td>
+                <td>
+                    <input type="checkbox" name="published" {% if appointment.was_present %}checked{% endif %}
+                           disabled="false"/></td>
+                <td>
+                    <div class="btn-group flex-wrap" role="group">
+                        <a href="{% url 'appointments:detail' appointment.id %}" class="btn btn-primary">Ver</a>
+                        <a href="{% url 'appointments:edit' appointment.id %}" class="btn btn-info">Editar</a>
                         <a href="{% url 'appointments:delete' appointment.id %}" class="btn btn-danger">Borrar</a>
-                    </td>
-
-                    <td></td>
-                </tr>
-
-                {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
             </tbody>
         </tr>
     </table>

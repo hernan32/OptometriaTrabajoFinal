@@ -1,83 +1,17 @@
 {% extends "index/base.html" %}
 {% block title %}Mis Pacientes - {{request.user.username}}{% endblock %}
+{% load static %}
 {% block navbar %} {% include "index/logout.html" %}{% endblock %}
 {% block custom_imports %}
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-$(function() {
-    $( "#datepicker_by_day").datepicker({
-        dateFormat: 'dd/mm/yy',
-        monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-        monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-        dayNamesMin: ['Do','Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-            onSelect: function(date) {
-                window.location.replace("/medico/mis_pacientes/"+date.concat("/"));
-            }
-    });
-  })
-
-$(function() {
-    $( "#datepicker_by_month" ).datepicker({
-        dateFormat: 'mm',
-        changeMonth: true,
-        monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-        monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-        minDate: new Date(new Date().getFullYear()+'-1-1'),
-        maxDate: new Date(new Date().getFullYear()+'-12-31'),
-        closeText : "Aceptar",
-        showButtonPanel: true,
-              beforeShow: function(input) {
-                $(this).datepicker('widget').addClass('hide-calendar');
-               },
-              onClose: function(input, inst) {
-                $(this).datepicker('widget').removeClass('hide-calendar');
-                $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
-                $(location).attr('href','/medico/mis_pacientes/'+(inst.selectedMonth+1)+"/"+inst.selectedYear);
-               }
-    });
-})
-
-$(function() {
-    $( "#datepicker_by_year" ).datepicker({
-        dateFormat: 'yy',
-        changeYear: true,
-        stepMonths: 0,
-        showButtonPanel: true,
-        closeText : "Aceptar",
-        monthNames: ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-              beforeShow: function(input) {
-                $(this).datepicker('widget').addClass('hide-calendar');
-                $(this).datepicker("widget").removeClass("ui-datepicker-current");
-               },
-              onClose: function(input, inst) {
-                $(this).datepicker('widget').removeClass('hide-calendar');
-                $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
-                $(location).attr('href','/medico/mis_pacientes/'+inst.selectedYear);
-               }
-    });
-})
-</script>
-
-<style>.hide-calendar .ui-datepicker-calendar{
-  display: none;
-  }
-
-  #ui-datepicker-div button.ui-datepicker-current {display: none;}
-
-}</style>
-
 {% endblock %}
 {% block content %}
 
 <div class="container mt-4 text-center">
     <h1>Mis Pacientes - Turnos</h1>
-    <div class="text-right">
-        <p>Filtrar por Día: <input type="text" id="datepicker_by_day"></p>
-        <p>Filtrar por Mes: <input type="text" id="datepicker_by_month"></p>
-        <p>Filtrar por Año: <input type="text" id="datepicker_by_year"></p>
-    </div>
+    <button class="btn btn-warning " data-toggle="modal" data-target=".bd-example-modal-sm">Filtrar</button>
     <table class="table mt-4">
         <tr>
             <thead class="thead-light">
@@ -95,18 +29,52 @@ $(function() {
                 <td>{{appointment.patient}}</td>
                 <td>{{appointment.date}}</td>
                 <td>{{appointment.medic}}</td>
-                <td><input type="checkbox" name="published" disabled="false" {% if appointment.was_present %}checked{% endif %} /></td>
+                <td><input type="checkbox" name="published" {% if appointment.was_present %}checked{% endif %}
+                           disabled="false"/></td>
 
                 <td>
-                    <a href="{% url 'appointments:patient_edit' appointment.patient.document_id %}"
-                       class="btn btn-info">Editar</a>
+                    <div class="btn-group flex-wrap" role="group">
+                        <a href="{% url 'appointments:patient_edit' appointment.patient.document_id %}"
+                           class="btn btn-info">Editar</a>
+                    </div>
                 </td>
 
-                <td></td>
             </tr>
             {% endfor %}
             </tbody>
         </tr>
     </table>
 </div>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-sm" id="filterMenu" tabindex="-1" role="dialog" aria-labelledby="filterMenu"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterMenuLabel">Filtros</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Filtrar por Día: <input type="hidden" id="datepicker_by_day"></p>
+                <p>Filtrar por Mes: <input type="hidden" id="datepicker_by_month"></p>
+                <p>Filtrar por Año: <input type="hidden" id="datepicker_by_year"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static '/js/filter_datepicker.js' %}"></script>
+<link href="{% static '/css/report_datepicker.css' %}" rel="stylesheet"/>
+<script type="text/javascript">
+    STATIC_FILES = {
+       "CAL": "{% static '/img/calendar.png' %}",
+    };
+
+</script>
 {% endblock %}

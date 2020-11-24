@@ -10,7 +10,10 @@
             <h5 class="card-title">{{order.patient}}</h5>
         </div>
         <div class="card-body col-4">
-                <ul class="list-group">{% for product in order.products.all %}<li class="list-group-item"> {{ product }}</li>{% endfor %}</ul>
+            <ul class="list-group">{% for product in order.products.all %}
+                <li class="list-group-item"> {{ product }}</li>
+                {% endfor %}
+            </ul>
             <br>
             <a href="{% url 'orders:workshop_list' %}" class="btn btn-primary">Regresar</a>
         </div>

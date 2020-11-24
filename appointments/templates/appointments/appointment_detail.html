@@ -17,11 +17,10 @@
                 <dd class="col-sm-9">{{ appointment.medic }}</dd>
                 <dt class="col-sm-3">Atendido</dt>
                 <dd class="col-sm-9">
-                    <td><input type="checkbox" name="published" disabled="false" {% if appointment.was_present %}
-                               checked {% endif %}/></td>
+                    <td><input type="checkbox" name="published" {% if appointment.was_present %}checked {% endif %}
+                               disabled="false"/></td>
                 </dd>
             </dl>
-
             <a href="{% url 'appointments:list' %}" class="btn btn-primary">Regresar</a>
         </div>
     </div>

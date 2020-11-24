@@ -3,13 +3,14 @@
 {% block navbar %} {% include "index/logout.html" %}{% endblock %}
 {% load bootstrap4 %}
 {% block content %}
+
 <div class="container mt-4">
     <div class="card">
         <div class="card-header ">
             <h5 class="card-title">Ficha de Paciente</h5>
         </div>
         <div class="card-body">
-            Osea:{{appointments.patient.id}}
+            {{appointments.patient.id}}
             <form method="post" class="form">
                 {% csrf_token %}
                 {% bootstrap_form form %}
@@ -20,8 +21,6 @@
                 <a href="{% url 'appointments:patients_list' %}" class="btn btn-danger">Cancelar</a>
                 {% endbuttons %}
             </form>
-
-
         </div>
     </div>
 </div>

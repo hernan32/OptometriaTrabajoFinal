@@ -1,4 +1,5 @@
 {% extends "index/base.html" %}
+{% load static %}
 {% block title %}Pedido{% endblock %}
 {% block navbar %} {% include "index/logout.html" %}{% endblock %}
 {% load bootstrap4 %}
@@ -10,52 +11,22 @@
             <h5 class="card-title">Pedido</h5>
         </div>
         <div class="card-body">
-
             <form method="post" class="form">
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 <div class="form-group">
                     <label>Total</label>
-                    <p id="total">$ {{order.total_price}}</p>
+                    <p id="total">${{order.total_price}}</p>
                 </div>
                 {% buttons %}
-
                 <button type="submit" class="btn btn-success">
                     Aceptar
                 </button>
                 <a href="{% url 'orders:list' %}" class="btn btn-danger">Cancelar</a>
                 {% endbuttons %}
             </form>
-
-            <script>
-    const selectElement = document.querySelector('#id_products');
-
-    selectElement.addEventListener('change', (event) => {
-
-        const resultado = document.querySelector('#total');
-
-        cantidad = selectElement.length;
-
-        var total=0;
-
-        for (var i=0;i<cantidad;i++) {
-
-            if (selectElement.selectedOptions[i]) {
-                contenido= selectElement.selectedOptions[i].textContent;
-
-                parcial = contenido.substr(contenido.indexOf('$')+2)
-
-                parcial2= parseFloat(parcial);
-
-                total = total+parcial2;
-            }
-        }
-            resultado.textContent = `$ ${total}`;
-
-        });
-
-</script>
-
+            <!-- Dynamic Price -->
+            <script src="{% static '/js/dynamic_price.js' %}"></script>
         </div>
     </div>
 </div>

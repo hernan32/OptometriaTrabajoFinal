@@ -4,40 +4,38 @@
 {% block content %}
 
 <div class="container mt-4 text-center">
-        <h1>Pedidos</h1>
-
+    <h1>Pedidos</h1>
     <a href="{% url 'orders:new'%}" class="btn btn-primary">Agregar - Nuevo Pedido</a>
     <a href="{% url 'orders:catalog'%}" class="btn btn-primary">Ver Catalogo</a>
-
     <table class="table mt-4">
         <tr>
             <thead class="thead-light">
-                <tr>
-                    <th scope="col">Paciente</th>
-                    <th scope="col">Vendedor</th>
-                    <th scope="col">Precio Total</th>
-                    <th scope="col">Forma de Pago</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Acciones</th>
-                </tr>
+            <tr>
+                <th scope="col">Paciente</th>
+                <th scope="col">Vendedor</th>
+                <th scope="col">Precio Total</th>
+                <th scope="col">Forma de Pago</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+            </tr>
             </thead>
             <tbody>
-                {% for order in object_list %}
-                <tr>
-                    <td>{{order.patient}}</td>
-                    <td>{{order.seller}}</td>
-                    <td>$ {{order.total_price}}</td>
-                    <td>{{order.get_payment_method_display}}</td>
-                    <td>{{order.get_status_display}}</td>
-                    <td>
-                        <a href="{% url 'orders:detail' order.id %}" class="btn btn-primary">Ver</a> | <a href="{% url 'orders:edit' order.id %}" class="btn btn-info">Actualizar</a> |
+            {% for order in object_list %}
+            <tr>
+                <td>{{order.patient}}</td>
+                <td>{{order.seller}}</td>
+                <td>${{order.total_price}}</td>
+                <td>{{order.get_payment_method_display}}</td>
+                <td>{{order.get_status_display}}</td>
+                <td>
+                    <div class="btn-group flex-wrap" role="group">
+                        <a href="{% url 'orders:detail' order.id %}" class="btn btn-primary">Ver</a>
+                        <a href="{% url 'orders:edit' order.id %}" class="btn btn-info">Editar</a>
                         <a href="{% url 'orders:delete' order.id %}" class="btn btn-danger">Borrar</a>
-                    </td>
-
-
-                </tr>
-
-                {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
             </tbody>
         </tr>
     </table>

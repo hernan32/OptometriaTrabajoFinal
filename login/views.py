@@ -1,24 +1,33 @@
+from django import forms
 from django.contrib.auth import login as do_login
 from django.contrib.auth import logout as do_logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
+from django.forms import CharField
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-
-
-def panel(request):
-    if request.user.is_authenticated:
-        return render(request, "panel.html")
-    return redirect('/login')
 
 
 def login(request):
     return render(request, "login.html")
 
 
+class BootstrapAuthenticationForm(AuthenticationForm):
+    username = UsernameField(
+        label="",
+        max_length=32,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeHolder': 'Usuario'})
+    )
+    password = CharField(
+        label="",
+        max_length=32,
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeHolder': 'Contraseña'})
+    )
+
+
 def login(request):
-    form = AuthenticationForm()
+    form = BootstrapAuthenticationForm()
     if request.method == "POST":
-        form = AuthenticationForm(data=request.POST)
+        form = BootstrapAuthenticationForm(data=request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -35,6 +44,8 @@ def login(request):
                     return HttpResponseRedirect('/vendedor/pedidos/')
                 elif request.user.groups.filter(name="Taller").exists():
                     return HttpResponseRedirect('/tallerista/pedidos/')
+                elif request.user.groups.filter(name="Gerencia").exists():
+                    return HttpResponseRedirect('/gerente/vista_general/turnos')
                 return redirect('/login')
 
     return render(request, "login.html", {'form': form})

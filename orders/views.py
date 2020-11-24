@@ -1,9 +1,12 @@
-from django.db.models import Q
-from django.forms import HiddenInput
+from django.db.models import Q, Count
+from django.forms import DateInput
+from django.http import request
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, MonthArchiveView, \
+    WeekArchiveView
 
 from orders.models import Order, Product
+from patient.models import Patient
 
 
 class OrderList(ListView):
@@ -17,7 +20,13 @@ class OrderDetail(DetailView):
 class OrderCreation(CreateView):
     model = Order
     success_url = reverse_lazy('orders:list')
-    fields = ['patient', 'seller', 'products', 'payment_method']
+    fields = ['patient', 'seller', 'products', 'date', 'payment_method']
+
+    def get_form(self, form_class=None):
+        """add date picker in forms"""
+        form = super(OrderCreation, self).get_form()
+        form.fields['date'].widget = DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M')
+        return form
 
 
 class OrderUpdate(UpdateView):
@@ -90,3 +99,63 @@ class WorkShopUpdate(UpdateView):
         form.fields['seller'].disabled = True
         return form
 
+
+class OverviewProductList(ListView):
+    model = Product
+    template_name_suffix = "_overview"
+
+
+class OverviewOrderList(ListView):
+    model = Order
+    template_name_suffix = "_overview"
+
+
+class PatientsWithOrdersByMonth(MonthArchiveView):
+    queryset = Order.objects.all()
+    date_field = "date"
+    allow_future = True
+    allow_empty = True
+    template_name_suffix = '_report_by_month'
+
+    def get_queryset(self):
+        return self.queryset.values('patient').annotate(Count('patient'))
+
+
+class PatientsWithOrdersByWeek(WeekArchiveView):
+    queryset = Order.objects.all()
+    date_field = "date"
+    week_format = "%W"
+    allow_future = True
+    allow_empty = True
+    template_name_suffix = '_report_by_week'
+
+    def get_queryset(self):
+        return self.queryset.values('patient').annotate(Count('patient'))
+
+
+class BestSellerByMonth(MonthArchiveView):
+    queryset = Order.objects.all()
+    date_field = "date"
+    allow_future = True
+    allow_empty = True
+
+    def get_template_names(self):
+        return ['orders/product_report_by_month.html']
+
+    def get_queryset(self):
+        return self.queryset.values('products__name') \
+            .annotate(Count('products__name')).order_by('-products__name__count')
+
+
+class BestSalesByMonth(MonthArchiveView):
+    queryset = Order.objects.all()
+    date_field = "date"
+    allow_future = True
+    allow_empty = True
+
+    def get_template_names(self):
+        return ['orders/product_sales_report_by_month.html']
+
+    def get_queryset(self):
+        return self.queryset.values('seller__first_name')\
+            .annotate(Count('seller__first_name')).order_by('-seller__first_name__count')

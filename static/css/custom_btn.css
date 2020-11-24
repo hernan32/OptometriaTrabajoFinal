@@ -1,0 +1,14 @@
+.btn {
+  padding: 1.25rem 2rem;
+  letter-spacing: 0.15rem;
+}
+
+.btn-separator:after {
+    content: ' ';
+    display: block;
+    float: left;
+    background: #ADADAD;
+    margin: 0 10px;
+    height: 34px;
+    width: 1px;
+}

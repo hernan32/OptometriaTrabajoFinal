@@ -1,0 +1,33 @@
+{% extends "index/base.html" %}
+{% block title %}Reporte - {{request.user.username}}{% endblock %}
+{% block navbar %} {% include "index/logout.html" %}{% endblock %}
+{% block content %}
+
+<div class="container mt-4 text-center">
+    <h1>Reporte por {{assistance}} - Mes: {{ month|date:"F" }}</h1>
+    <table class="table mt-4">
+        <tr>
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Paciente</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Medico</th>
+                <th scope="col">¿Asistio?</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for appointment in object_list %}
+            <tr>
+                <td>{{appointment.patient}}</td>
+                <td>{{appointment.date}}</td>
+                <td>{{appointment.medic}}</td>
+                <td><input type="checkbox" name="published" {% if appointment.was_present %}checked{% endif %}
+                           disabled="false"/></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </tr>
+    </table>
+    <a href="{% url 'appointments:appointments_overview' %}" class="btn btn-primary">Regresar</a>
+</div>
+{% endblock %}

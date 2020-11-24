@@ -7,33 +7,34 @@
     <table class="table mt-4">
         <tr>
             <thead class="thead-light">
-                <tr>
-                    <th scope="col">Paciente</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Medico</th>
-                    <th scope="col">¿Asistio?</th>
-                    <th scope="col">Historial Medico</th>
-                </tr>
+            <tr>
+                <th scope="col">Paciente</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Medico</th>
+                <th scope="col">¿Asistio?</th>
+                <th scope="col">Historial Medico</th>
+            </tr>
             </thead>
             <tbody>
-                {% for appointment in object_list %}
-                <tr>
-                    <td>{{appointment.patient}}</td>
-                    <td>{{appointment.date}}</td>
-                    <td>{{appointment.medic}}</td>
-                    <td><input type="checkbox" name="published" disabled="false" {% if appointment.was_present %}checked{% endif %} /></td>
+            {% for appointment in object_list %}
+            <tr>
+                <td>{{appointment.patient}}</td>
+                <td>{{appointment.date}}</td>
+                <td>{{appointment.medic}}</td>
+                <td><input type="checkbox" name="published" {% if appointment.was_present %}checked{% endif %}
+                           disabled="false"/></td>
+                <td>
+                    <div class="btn-group flex-wrap" role="group">
+                        <a href="{% url 'appointments:patient_edit' appointment.patient.document_id %}"
+                           class="btn btn-info">Editar</a>
+                    </div>
+                </td>
 
-                    <td>
-                        <a href="{% url 'appointments:patient_edit' appointment.patient.document_id %}" class="btn btn-info">Editar</a>
-                    </td>
-
-                    <td></td>
-                </tr>
-                {% endfor %}
+            </tr>
+            {% endfor %}
             </tbody>
         </tr>
     </table>
-                    <a href="{% url 'appointments:patients_list' %}" class="btn btn-primary">Regresar</a>
-
+    <a href="{% url 'appointments:patients_list' %}" class="btn btn-primary">Regresar</a>
 </div>
 {% endblock %}

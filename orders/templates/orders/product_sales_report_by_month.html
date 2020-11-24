@@ -1,0 +1,33 @@
+{% extends "index/base.html" %}
+{% block title %}Reporte - {{request.user.username}}{% endblock %}
+{% block navbar %} {% include "index/logout.html" %}{% endblock %}
+{% block content %}
+
+<div class="container mt-4 text-center">
+    <h1>Reporte de Vendores con mas Ventas - Mes: {{ month|date:"F" }}</h1>
+    <table class="table mt-4">
+        <tr>
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Vendedor</th>
+                <th scope="col">Ventas</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in object_list %}
+            <tr>
+                {% if forloop.first %}
+                <td class="bg-danger text-white font-weight-bold">{{order.seller__first_name}}</td>
+                <td class="bg-danger text-white font-weight-bold">{{order.seller__first_name__count}}</td>
+                {% else %}
+                <td>{{order.seller}}</td>
+                <td>{{order.seller__count}}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </tr>
+    </table>
+    <a href="{% url 'orders:products_overview' %}" class="btn btn-primary m-2">Regresar</a>
+</div>
+{% endblock %}

@@ -14,7 +14,8 @@ class Appointment(models.Model):
                                 verbose_name="Fecha")
     medic = models.ForeignKey(settings.AUTH_USER_MODEL,
                               limit_choices_to=Q(groups__name='Medico'),
-                              on_delete=models.CASCADE)
+                              on_delete=models.CASCADE,
+                              verbose_name="Medico")
     was_present = models.BooleanField(default=False,
                                       verbose_name="¿Atendido?")
 

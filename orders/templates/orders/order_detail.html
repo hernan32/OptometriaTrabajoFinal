@@ -1,9 +1,8 @@
 {% extends "index/base.html" %}
-
 {% block title %}Pedido{% endblock %}
 {% load bootstrap4 %}
-
 {% block content %}
+
 <div class="container mt-4">
     <div class="card">
         <div class="card-header">
@@ -14,7 +13,9 @@
                 <dt class="col-sm-3">Vendedor</dt>
                 <dd class="col-sm-9">{{ order.seller }}</dd>
                 <dt class="col-sm-3">Productos</dt>
-                <dd class="col-sm-9">{% for product in order.products.all %}<li> {{ product }}</li>{% endfor %}
+                <dd class="col-sm-9">{% for product in order.products.all %}
+                    <li> {{ product }}</li>
+                    {% endfor %}
                 </dd>
                 <dt class="col-sm-3">Fecha</dt>
                 <dd class="col-sm-9">{{ order.date }}</dd>
@@ -23,9 +24,8 @@
                 <dt class="col-sm-3">Estado</dt>
                 <dd class="col-sm-9">{{ order.get_status_display }}</dd>
                 <dt class="col-sm-3">Total</dt>
-                <dd class="col-sm-9">$ {{ order.total_price }}</dd>
+                <dd class="col-sm-9">${{ order.total_price }}</dd>
             </dl>
-
             <a href="{% url 'orders:list' %}" class="btn btn-primary">Regresar</a>
         </div>
     </div>

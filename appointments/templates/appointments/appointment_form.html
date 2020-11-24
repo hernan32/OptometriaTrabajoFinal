@@ -9,7 +9,6 @@
             <h5 class="card-title">Turno</h5>
         </div>
         <div class="card-body">
-
             <form method="post" class="form">
                 {% csrf_token %}
                 {% bootstrap_form form %}
@@ -20,8 +19,6 @@
                 <a href="{% url 'appointments:list' %}" class="btn btn-danger">Cancelar</a>
                 {% endbuttons %}
             </form>
-
-
         </div>
     </div>
 </div>

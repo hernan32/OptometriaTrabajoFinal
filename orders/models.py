@@ -1,6 +1,9 @@
+from datetime import datetime
+
 from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.db import models
-from django.db.models import Q, Sum
+from django.db.models import Q
 
 from patient.models import Patient
 
@@ -56,8 +59,9 @@ class Order(models.Model):
                                limit_choices_to=Q(groups__name='Vendedor'),
                                related_name="Vendedor",
                                verbose_name="Vendedor")
-    date = models.DateTimeField(auto_now=True,
-                                verbose_name="Fecha")
+    date = models.DateTimeField(default=datetime.now(),
+                                verbose_name="Fecha",
+                                validators=[MinValueValidator(limit_value=datetime.now)])
     STATUS = (
         ('PED', 'Pedido'),
         ('TAL', 'Taller'),
