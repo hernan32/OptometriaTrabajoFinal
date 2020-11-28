@@ -1,9 +1,8 @@
-from datetime import datetime
-
 from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 
 from patient.models import Patient
 
@@ -59,9 +58,11 @@ class Order(models.Model):
                                limit_choices_to=Q(groups__name='Vendedor'),
                                related_name="Vendedor",
                                verbose_name="Vendedor")
-    date = models.DateTimeField(default=datetime.now(),
+    date = models.DateTimeField(default=timezone.now(),
                                 verbose_name="Fecha",
-                                validators=[MinValueValidator(limit_value=datetime.now)])
+                                validators=[MinValueValidator(limit_value=timezone.now(), message='Ingrese una fecha '
+                                                                                                  'y/u horario '
+                                                                                                  'posterior.')])
     STATUS = (
         ('PED', 'Pedido'),
         ('TAL', 'Taller'),
