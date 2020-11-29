@@ -55,6 +55,6 @@ Cualquier falla en cumplimentar uno de los requisitos o puntos del enunciado der
 
 ## Enlace del Formulario de Presentación
 
-Todos los inscriptos, sin distinción, deberán presentar el Trabajo Final 2020 por medio del siguiente formulario https://forms.gle/yaBkU1RtDTzCpS1u
+Todos los inscriptos, sin distinción, deberán presentar el Trabajo Final 2020 por medio del siguiente formulario https://forms.gle/yaBkU1RtDTzCpS1u8
 
 
