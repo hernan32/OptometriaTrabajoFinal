@@ -1,12 +1,10 @@
 from django.db.models import Q, Count
 from django.forms import DateInput
-from django.http import request
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, MonthArchiveView, \
     WeekArchiveView
 
 from orders.models import Order, Product
-from patient.models import Patient
 
 
 class OrderList(ListView):
@@ -20,7 +18,11 @@ class OrderDetail(DetailView):
 class OrderCreation(CreateView):
     model = Order
     success_url = reverse_lazy('orders:list')
-    fields = ['patient', 'seller', 'products', 'date', 'payment_method']
+    fields = ['patient', 'products', 'date', 'payment_method']
+
+    def form_valid(self, form):
+        form.instance.seller = self.request.user
+        return super().form_valid(form)
 
     def get_form(self, form_class=None):
         """add date picker in forms"""
