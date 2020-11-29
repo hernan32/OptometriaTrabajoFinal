@@ -10,9 +10,15 @@ from orders.models import Order, Product
 class OrderList(ListView):
     model = Order
 
+    def get_queryset(self):
+        return Order.objects.filter(seller=self.request.user)
+
 
 class OrderDetail(DetailView):
     model = Order
+
+    def get_queryset(self):
+        return Order.objects.filter(seller=self.request.user)
 
 
 class OrderCreation(CreateView):
@@ -44,10 +50,16 @@ class OrderUpdate(UpdateView):
         form.fields['payment_method'].disabled = True
         return form
 
+    def get_queryset(self):
+        return Order.objects.filter(seller=self.request.user)
+
 
 class OrderDelete(DeleteView):
     model = Order
     success_url = reverse_lazy('orders:list')
+
+    def get_queryset(self):
+        return Order.objects.filter(seller=self.request.user)
 
 
 class ProductList(ListView):
@@ -159,5 +171,5 @@ class BestSalesByMonth(MonthArchiveView):
         return ['orders/product_sales_report_by_month.html']
 
     def get_queryset(self):
-        return self.queryset.values('seller__first_name')\
+        return self.queryset.values('seller__first_name') \
             .annotate(Count('seller__first_name')).order_by('-seller__first_name__count')
