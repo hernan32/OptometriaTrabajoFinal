@@ -58,11 +58,11 @@ class Order(models.Model):
                                limit_choices_to=Q(groups__name='Vendedor'),
                                related_name="Vendedor",
                                verbose_name="Vendedor")
-    date = models.DateTimeField(default=timezone.now(),
+    date = models.DateTimeField(default=timezone.now,
                                 verbose_name="Fecha",
-                                validators=[MinValueValidator(limit_value=timezone.now(), message='Ingrese una fecha '
-                                                                                                  'y/u horario '
-                                                                                                  'posterior.')])
+                                validators=[MinValueValidator(limit_value=timezone.now, message='Ingrese una fecha '
+                                                                                                'y/u horario '
+                                                                                                'posterior.')])
     STATUS = (
         ('PED', 'Pedido'),
         ('TAL', 'Taller'),

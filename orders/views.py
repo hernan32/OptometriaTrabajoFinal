@@ -1,5 +1,5 @@
 from django.db.models import Q, Count
-from django.forms import DateInput, RadioSelect
+from django.forms import RadioSelect, DateTimeInput
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, MonthArchiveView, \
     WeekArchiveView
@@ -34,7 +34,7 @@ class OrderCreation(CreateView):
     def get_form(self, form_class=None):
         """add date picker in forms"""
         form = super(OrderCreation, self).get_form()
-        form.fields['date'].widget = DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M')
+        form.fields['date'].widget = DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M')
         return form
 
 
