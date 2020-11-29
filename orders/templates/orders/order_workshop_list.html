@@ -19,7 +19,11 @@
             </thead>
             <tbody>
             {% for order in object_list %}
+            {% if order.get_status_display == 'Finalizado' %}
+            <tr class="text-muted">
+                {% else %}
             <tr>
+                {% endif %}
                 <td>{{order.patient}}</td>
                 <td>{{order.seller}}</td>
                 <td>{{order.date}}</td>

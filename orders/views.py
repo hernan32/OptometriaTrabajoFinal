@@ -1,5 +1,5 @@
 from django.db.models import Q, Count
-from django.forms import DateInput
+from django.forms import DateInput, RadioSelect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, MonthArchiveView, \
     WeekArchiveView
@@ -107,11 +107,16 @@ class WorkShopUpdate(UpdateView):
     success_url = reverse_lazy('orders:workshop_list')
     template_name_suffix = '_workshop_form'
     fields = ['patient', 'seller', 'status']
+    WORKSHOP_STATUS = (
+        ('TAL', 'Taller'),
+        ('FIN', 'Finalizado'),
+    )
 
     def get_form(self, form_class=None):
         form = super(WorkShopUpdate, self).get_form()
         form.fields['patient'].disabled = True
         form.fields['seller'].disabled = True
+        form.fields['status'].widget = RadioSelect(choices=self.WORKSHOP_STATUS)
         return form
 
 
